@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    display: none;
+
+    <ol>
+        <li>DOM 结构：浏览器不会渲染 display 属性为 none 的元素，不占据空间；</li>
+        <li>事件监听：无法进行 DOM 事件监听；</li>
+        <li>性能：动态改变此属性时会引起重排，性能较差；</li>
+        <li>继承：不会被子元素继承，子类也不会被渲染；</li>
+    </ol>
+
+    visibility: hidden;
+
+    <ol>
+        <li>DOM 结构：元素被隐藏，但是会被渲染不会消失，占据空间；</li>
+        <li>事件监听：无法进行 DOM 事件监听；</li>
+        <li>性 能：动态改变此属性时会引起重绘，性能较高；</li>
+        <li>继 承：会被子元素继承，子元素可以通过设置 visibility: visible; 来取消隐藏；</li>
+        <li>transition：visibility 会立即显示，隐藏时会延时</li>
+    </ol>
+
+    opacity: 0;
+
+    <ol>
+        <li>DOM 结构：透明度为 100%，元素隐藏，占据空间；</li>
+        <li>事件监听：可以进行 DOM 事件监听；</li>
+        <li>性 能：提升为合成层，不会触发重绘，性能较高；</li>
+        <li>继 承：会被子元素继承,且子元素并不能通过 opacity: 1 来取消隐藏；</li>
+        <li>transition：opacity 可以延时显示和隐藏</li>
+        <li>场景： 自定义图片上传按钮</li>
+    </ol>
+
+    <p>结构：
+        display:none: 会让元素完全从渲染树中消失，渲染的时候不占据任何空间, 不能点击，
+        visibility: hidden:不会让元素从渲染树消失，渲染元素继续占据空间，只是内容不可见，不能点击
+        opacity: 0: 不会让元素从渲染树消失，渲染元素继续占据空间，只是内容不可见，可以点击
+    </p>
+    <p>继承：
+        display: none和opacity: 0：是非继承属性，子孙节点消失由于元素从渲染树消失造成，通过修改子孙节点属性无法显示。
+        visibility: hidden：是继承属性，子孙节点消失由于继承了hidden，通过设置visibility: visible;可以让子孙节点显式。
+    </p>
+    <p>性能：
+        display: none 修改元素会造成文档回流,读屏器不会读取display: none元素内容，性能消耗较大
+        visibility:hidden: 修改元素只会造成本元素的重绘,性能消耗较少读屏器读取visibility: hidden元素内容
+        opacity: 0 ： 修改元素会造成重绘，性能消耗较少
+    </p>
+
+    联系：它们都能让元素不可见
+    <div style="opacity: 0">
+        <p style="opacity: 0.6;background: #eee;">子元素</p>
+    </div>
+</body>
+
+</html>

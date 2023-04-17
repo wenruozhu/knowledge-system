@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>浅拷贝是创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址 ，所以如果其中一个对象改变了这个地址，就会影响到另一个对象。</p>
+</body>
+<script>
+    /* 1.Object.assign浅拷贝 */
+    let chandler = {
+        name: 'joey',
+        age: 30,
+        hobby: ['eat', 'sleep']
+    }
+    let joey = Object.assign({}, chandler);
+    chandler.name = 'chandler';
+    chandler.age = 28;
+    chandler.hobby.push('code')
+    console.log(chandler);
+    console.log(joey);
+    /* 2.展开运算符... */
+    let ross = {
+        ...joey
+    };
+    ross.name = 'ross';
+    ross.age = 32;
+    // console.log(ross);
+
+</script>
+
+</html>

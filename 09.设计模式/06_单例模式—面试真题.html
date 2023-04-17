@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>单例模式弹框</title>
+</head>
+<style>
+    #modal {
+        height: 200px;
+        width: 200px;
+        line-height: 200px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid black;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <button id='open'>打开弹框</button>
+    <button id='close'>关闭弹框</button>
+</body>
+<script>
+    // 静态方法版
+    class Storge {
+        static getInstance() {
+            if (!Storge.instance) {
+                Storge.instance = new Storge()
+            }
+            return Storge.instance
+        }
+        getItem(key) {
+            return localStorage.getItem(key)
+        }
+        setItem(key, value) {
+            return localStorage.setItem(key, value)
+        }
+    }
+    const storge1 = Storge.getInstance()
+    const storge2 = Storge.getInstance()
+    storge1.setItem('name', '熊大')
+    storge1.getItem('name')
+    storge2.getItem('name')
+    // 闭包版
+    function StoreBase() {}
+    StoreBase.prototype.getItem = function (key) {
+        return localStorage.getItem(key)
+    }
+    StoreBase.prototype.setItem = function (key, val) {
+        return localStorage.setItem(key, val)
+    }
+    const StorgeClosure = (function () {
+        let instance = null
+        return function () {
+            if (!instance) {
+                instance = new StoreBase()
+            }
+            return instance
+        }
+    })()
+    // 单例模式弹框
+    let open = document.getElementById("open"),
+        close = document.getElementById("close");
+    const Modal = (function () {
+        let modal = null
+        return function () {
+            if (!modal) {
+                modal = document.createElement('div')
+                modal.innerHTML = '我是单例模式弹框'
+                modal.id = "modal"
+                modal.style.display = "none"
+                document.body.appendChild(modal)
+            }
+            return modal
+        }
+    })()
+    open.addEventListener('click', function () {
+        const modal = new Modal()
+        modal.style.display = 'block'
+    })
+    close.addEventListener('click', function () {
+        const modal = new Modal()
+        if (modal) {
+            modal.style.display = 'none'
+        }
+    })
+</script>
+
+</html>

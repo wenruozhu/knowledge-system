@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>何时使用margin：</p>
+    <ol>
+        <li>需要在border外侧添加空白</li>
+        <li>空白处不需要背景色</li>
+        <li>上下相连的两个盒子之间的空白，需要相互抵消时。</li>
+    </ol>
+    <p>何时使用padding：</p>
+    <ol>
+        <li>需要在border内侧添加空白</li>
+        <li>空白处需要背景颜色</li>
+        <li>上下相连的两个盒子的空白，希望为两者之和。</li>
+        <li>兼容性的问题：在IE5 IE6中，为float的盒子指定margin时，左侧的margin可能会变成两倍的宽度。通过改变padding或者指定盒子的display：inline解决。</li>
+    </ol>
+</body>
+
+</html>

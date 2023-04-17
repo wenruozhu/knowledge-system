@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>闭包正确的定义是：假如一个函数能访问外部的变量，那么就形成了一个闭包，而不是一定要返回一个函数。</p>
+</body>
+<script>
+    /* for (var i = 0; i <= 5; i++) {
+        setTimeout(function timer() {
+            console.log(i); //每隔一秒输出一个6
+        }, i * 1000);
+    } */
+    /* 利用闭包输出0～5 */
+    /* for (var i = 0; i <= 5; i++) {
+        (function (j) {
+            setTimeout(function () {
+                console.log(j);
+            }, j * 1000);
+        })(i)
+    } */
+    /* for (var i = 0; i <= 5; i++) {
+        setTimeout(function (j) {
+            console.log(j)
+        }, i * 1000, i)
+    } */
+    /* let生成块级作用域 */
+    for (let i = 0; i <= 5; i++) {
+        setTimeout(function timer() {
+            // console.log(i);
+        }, i * 1000);
+    }
+    // 柯里化（currying）
+    const curry = function (fn) {
+        // console.log(fn)
+        return function curryFn(...args) {
+            console.log('args', args)
+            if (args.length < fn.length) {
+                return function (...newArgs) {
+                    console.log('newArgs', newArgs)
+                    return curryFn(...args, ...newArgs)
+                }
+            } else {
+                return fn(...args)
+            }
+        }
+    }
+
+    let add = (a, b, c) => a + b + c
+    // 柯里化
+    add = curry(add)
+
+    console.log(add(1)(2)(3)) // 输出 6
+    // 偏函数（Partial function）
+    function getPerson(name, age) {
+        return function (height) {
+            return `${name} 今年${age}岁啦，身高${height}cm`;
+        }
+    }
+
+    let person = getPerson('Bamboo', '18');
+    person('178');     //"Bamboo 今年18岁啦，身高178cm"
+
+    // IIFF
+    const MyLibrary = (function (global) {
+        const myData = '***';
+        function feature1(params) {
+            console.log(params, global);
+        }
+        function feature2(params) {
+            console.log(params);
+        }
+        function ReturnFunction(params) {
+            // do something;
+            return {
+                myData,
+                feature1,
+            };
+        }
+        ReturnFunction.myData = myData;
+        ReturnFunction.feature2 = feature2;
+        return ReturnFunction;
+    })(typeof window !== 'undefined' ? window : this);
+    let a = 1
+    // 产生闭包
+    function fn() {
+        console.log(a);
+    }
+
+    function fn1() {
+        let a = 1
+        // 产生闭包
+        return () => {
+            console.log(a);
+        }
+    }
+    const fn2 = fn1()
+    fn2()
+
+
+</script>
+
+</html>

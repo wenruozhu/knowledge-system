@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //makeRequest 用来构造 request 对象
+    // function makeRequest(request_url) {
+    //     let request = {
+    //         method: 'Get',
+    //         url: request_url,
+    //         headers: '',
+    //         body: '',
+    //         credentials: false,
+    //         sync: true,
+    //         responseType: 'text',
+    //         referrer: ''
+    //     }
+    //     return request
+    // }
+    // function XFetch(request) {
+    //     function executor(resolve, reject) {
+    //         let xhr = new XMLHttpRequest()
+    //         xhr.open('GET', request.url, true)
+    //         xhr.ontimeout = function (e) { reject(e) }
+    //         xhr.onerror = function (e) { reject(e) }
+    //         xhr.onreadystatechange = function () {
+    //             console.log('this', this)
+    //             if (this.readyState === 4) {
+    //                 if (this.status === 200) {
+    //                     resolve(this.responseText, this)
+    //                 } else {
+    //                     let error = {
+    //                         code: this.status,
+    //                         response: this.response
+    //                     }
+    //                     reject(error, this)
+    //                 }
+    //             }
+    //         }
+    //         xhr.send()
+    //     }
+    //     return new Promise(executor)
+    // }
+    // var x1 = XFetch(makeRequest('https://time.geekbang.org/?category'))
+    // console.log('x1', x1)
+    // var x2 = x1.then(value => {
+    //     console.log('x1 value', value)
+    //     return XFetch(makeRequest('https://www.geekbang.org/column'))
+    // })
+    // console.log('x2', x2)
+    // var x3 = x2.then(value => {
+    //     console.log('x2 value', value)
+    //     return XFetch(makeRequest('https://time.geekbang.org'))
+    // })
+    // console.log('x3', x3)
+    // x3.catch(error => {
+    //     console.log(error)
+    // })
+    function executor(resolve, reject) {
+        resolve(100)
+    }
+    let x1 = new Promise(executor)
+    function onResolve(value) {
+        console.log('value', value)
+        let x2 = new Promise((resolve, reject) => {
+            resolve(value + 1)
+        })
+        console.log('onResolve x2', x2)
+        return x2
+    }
+    let x2 = x1.then(onResolve)
+    console.log('x2', x2)
+    x2.then((value) => {
+        console.log('x2.then value', value)
+        console.log('x2.then', x2)
+    })
+</script>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://juejin.cn/post/6844903919789801486">从多线程到Event Loop</a>
+    <h1>CPU、进程、线程，简单汇总：</h1>
+    <ol>
+        <li>进程是cpu资源分配的最小单位（是能拥有资源和独立运行的最小单位）</li>
+        <li>线程是cpu调度的最小单位（线程是建立在进程的基础上的一次程序运行单位，一个进程中可以有多个线程）</li>
+        <li>不同进程之间也可以通信，不过代价较大</li>
+        <li>单线程与多线程，都是指在一个进程内的单和多</li>
+    </ol>
+    <h2>浏览器是多进程的</h2>
+    <ol>
+        <li>浏览器是多进程的</li>
+        <li>每一个Tab页，就是一个独立的进程</li>
+    </ol>
+    <h2>浏览器包含了哪些进程</h2>
+    <ol>
+        <li>主进程</li>
+
+        1.协调控制其他子进程（创建、销毁）
+        2.浏览器界面显示，用户交互，前进、后退、收藏
+        3.将渲染进程得到的内存中的Bitmap，绘制到用户界面上
+        4.处理不可见操作，网络请求，文件访问等
+
+        <li>第三方插件进程</li>
+
+        每种类型的插件对应一个进程，仅当使用该插件时才创建
+
+        <li>GPU进程</li>
+
+        用于3D绘制等
+
+        <li>渲染进程，就是我们说的浏览器内核</li>
+
+        1.负责页面渲染，脚本执行，事件处理等
+        2.每个tab页一个渲染进程
+    </ol>
+    <h2>浏览器内核（渲染进程）</h2>
+    <ol>
+        <li>GUI渲染线程</li>
+
+        1.负责渲染页面，布局和绘制
+        2.页面需要重绘和回流时，该线程就会执行
+        3.与js引擎线程互斥，防止渲染结果不可预期
+
+        <li>JS引擎线程</li>
+
+        1.负责处理解析和执行javascript脚本程序
+        2.只有一个JS引擎线程（单线程）
+        3.与GUI渲染线程互斥，防止渲染结果不可预期
+
+        <li>事件触发线程</li>
+
+        1.用来控制事件循环（鼠标点击、setTimeout、ajax等）
+        2.当事件满足触发条件时，将事件放入到JS引擎所在的执行队列中
+
+        <li>定时触发器线程</li>
+
+        1.setInterval与setTimeout所在的线程
+        2.定时任务并不是由JS引擎计时的，是由定时触发线程来计时的
+        3.计时完毕后，通知事件触发线程
+
+        <li>异步http请求线程</li>
+
+        1.浏览器有一个单独的线程用于处理AJAX请求
+        2.当请求完成时，若有回调函数，通知事件触发线程
+    </ol>
+    <h2>为什么 javascript 是单线程的</h2>
+    <ol>
+        <li>首先是历史原因，在创建 javascript 这门语言时，多进程多线程的架构并不流行，硬件支持并不好。</li>
+        <li>其次是因为多线程的复杂性，多线程操作需要加锁，编码的复杂性会增高。</li>
+        <li>而且，如果同时操作 DOM ，在多线程不加锁的情况下，最终会导致 DOM 渲染的结果不可预期。</li>
+    </ol>
+    <p>（1）js是单线程的，但是分同步异步</p>
+    <p>（2）微任务和宏任务皆为异步任务，它们都属于一个队列
+    </p>
+    <p>（3）宏任务一般是：script、setTimeout、setInterval、postMessage、MessageChannel、setImmediate(Node.js 环境)
+    </p>
+    <p>（4）微任务：Promise.then、MutationObserver（浏览器）、process.nextTick(Node.js 环境)
+    </p>
+
+    <h2>调用栈 Call Stack </h2>
+
+    <p>在JavaScript运行的时候，主线程会形成一个栈，这个栈主要是解释器用来最终函数执行流的一种机制。通常这个栈被称为调用栈Call Stack，或者执行栈（Execution Context Stack）。</p>
+    <p>调用栈，顾名思义是具有LIFO（后进先出，Last in First Out）的结构。调用栈内存放的是代码执行期间的所有执行上下文。</p>
+    <ol>
+        <li>每调用一个函数，解释器就会把该函数的执行上下文添加到调用栈并开始执行；</li>
+        <li>正在调用栈中执行的函数，如果还调用了其他函数，那么新函数也会被添加到调用栈，并立即执行；</li>
+        <li>当前函数执行完毕后，解释器会将其执行上下文清除调用栈，继续执行剩余执行上下文中的剩余代码；</li>
+        <li>但分配的调用栈空间被占满，会引发”堆栈溢出“的报错。</li>
+    </ol>
+
+    <h2>事件循环 Event Loop</h2>
+
+    <ol>
+        <li>从宏任务队列中，按照入队顺序，找到第一个执行的宏任务，放入调用栈，开始执行；</li>
+        <li>执行完该宏任务下所有同步任务后，即调用栈清空后，该宏任务被推出宏任务队列，然后微任务队列开始按照入队顺序，依次执行其中的微任务，直至微任务队列清空为止；</li>
+        <li>当微任务队列清空后，一个事件循环结束；</li>
+        <li>接着从宏任务队列中，找到下一个执行的宏任务，开始第二个事件循环，直至宏任务队列清空为止。</li>
+    </ol>
+    <h3>重点：</h3>
+    <ol>
+        <li>当我们第一次执行的时候，解释器会将整体代码script放入宏任务队列中，因此事件循环是从第一个宏任务开始的；</li>
+        <li>如果在执行微任务的过程中，产生新的微任务添加到微任务队列中，也需要一起清空；微任务队列没清空之前，是不会执行下一个宏任务的。</li>
+    </ol>
+
+    <h3>await</h3>
+
+    <p>async关键字是将一个同步函数变成一个异步函数，并将返回值变为promise。</p>
+    
+    <p>而await可以放在任何异步的、基于promise的函数之前。在执行过程中，它会暂停代码在该行上，直到promise完成，然后返回结果值。而在暂停的同时，其他正在等待执行的代码就有机会执行了。</p>
+</body>
+<script>
+    // setTimeout(() => {
+    //     new Promise(resolve => {
+    //         resolve();
+    //     }).then(() => {
+    //         console.log('test');
+    //     });
+    //     console.log(4);
+    // });
+    // new Promise(resolve => {
+    //     resolve();
+    //     console.log(1)
+    // }).then(() => {
+    //     console.log(3);
+    //     Promise.resolve().then(() => {
+    //         console.log('before timeout');
+    //     }).then(() => {
+    //         Promise.resolve().then(() => {
+    //             console.log('also before timeout')
+    //         })
+    //     })
+    // })
+    // console.log(2);
+
+    // 1=>2=>3=>before timeout=>also before timeout=>4=>test
+
+    async function async1() {
+        console.log("a");
+        const res = await async2();
+        console.log("b");
+    }
+
+    async function async2() {
+        console.log("c");
+        return 2;
+    }
+
+    console.log("d");
+
+    setTimeout(() => {
+        console.log("e");
+    }, 0);
+
+    async1().then(res => {
+        console.log("f")
+    })
+
+    new Promise((resolve) => {
+        console.log("g");
+        resolve();
+    }).then(() => {
+        console.log("h");
+    });
+
+    console.log("i");
+    // d
+    // a
+    // c
+    // g
+    // i
+    // b
+    // h
+    // f
+    // e
+</script>
+
+</html>

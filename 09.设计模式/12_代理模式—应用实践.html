@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="father">
+        <a href="#">链接1号</a>
+        <span> span标签 </span>
+        <a href="#">链接2号</a>
+        <a href="#">链接3号</a>
+        <a href="#">链接4号</a>
+        <a href="#">链接5号</a>
+        <a href="#">链接6号</a>
+    </div>
+</body>
+<script>
+    // 事件代理
+    const father = document.getElementById("father")
+    father.addEventListener("click", function (e) {
+        console.log(e.target.innerText)
+        if (e.target.tagName === 'A') {
+            e.preventDefault()
+            alert(e.target.innerText)
+        }
+    })
+    // 虚拟代理
+    class PreLoadImage {
+        constructor(imgNode) {
+            this.imgNode = imgNode
+        }
+        setSrc(imgUrl) {
+            this.imgNode.src = imgUrl
+        }
+    }
+    class ProxyImage {
+        static LOADING_URL = "xxx"
+
+        constructor(targetImage) {
+            this.targetImage = targetImage
+        }
+        setSrc(targetUrl) {
+            this.targetImage.setSrc = ProxyImage.LOADING_URL
+            const virtualImage = new Image()
+            virtualImage.onload = () => {
+                this.targetImage.setSrc(targetUrl)
+            }
+            virtualImage.src = targetUrl
+        }
+
+    }
+    // 缓存代理
+    const addAll = function (arr) {
+        console.log('进行了一次新计算')
+
+        let result = arr.reduce((prev, next) => {
+            prev += next
+            return prev
+        }, 0)
+        return result
+    }
+    // 为求和方法创建代理
+    const proxyAddAll = (function () {
+        // 求和结果缓存池
+        const resultCache = {}
+        return function () {
+            console.log('arguments', arguments) // 1,2,3,3,2,1
+            const args = Array.prototype.join.call(arguments, ',')
+            console.log('args', args) // 1,2,3,3,2,1
+            console.log('resultCache', resultCache) // 1,2,3,3,2,1
+
+            if (args in resultCache) {
+                console.log(resultCache, args in resultCache)
+                return resultCache[args]
+            }
+            return resultCache[args] = addAll(...arguments)
+        }
+    })()
+    // console.log(proxyAddAll([1, 2, 3, 3, 2, 1]))
+</script>
+
+</html>

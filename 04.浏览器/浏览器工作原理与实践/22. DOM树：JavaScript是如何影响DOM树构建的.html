@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>HTML 解析器并不是等整个文档加载完成之后再解析的，而是网络进程加载了多少数据，HTML 解析器便解析多少数据。</h2>
+
+    <h2>DOM 树如何生成</h2>
+    <p>HTML 解析器（HTMLParser）负责将 HTML 字节流转换为 DOM 结构</p>
+
+    <h2>字节流转换为 DOM 需要三个阶段</h2>
+    <p>第一个阶段，通过分词器将字节流转换为 Token。 </p>
+    <p>第二个和第三个阶段是同步进行的，需要将 Token 解析为 DOM 节点，并将 DOM 节点添加到 DOM 树中。</p>
+
+    <h2>JavaScript 是如何影响 DOM 生成的</h2>
+    <p>解析到script标签时，HTML 解析器就会暂停 DOM的解析JavaScript 引擎介入，并执行 script 标签中的这段脚本，脚本执行完成之后，HTML解析器恢复解析过程，继续解析后续的内容，直至生成最终的DOM。
+    </p>
+
+    <script type="text/javascript" src='foo.js'></script>
+    <p>JavaScript 文件加载，JavaScript 文件的下载过程会阻塞 DOM 解析</p>
+
+    async 和 defer 都是异步加载
+
+    <script async type="text/javascript" src='foo.js'></script>
+
+    使用 async 标志的脚本文件一旦加载完成，会立即执行。
+
+    <script defer type="text/javascript" src='foo.js'></script>
+
+    使用 defer 标记的脚本文件，需要在 DOMContentLoaded 事件之前执行。
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>CSSOM 作用</h2>
+    <h3>CSSOM 体现在 DOM 中就是document.styleSheets</h3>
+    <ol>
+        <li>1.提供给 JavaScript 操作样式表的能力。</li>
+        <li>2.为布局树的合成提供基础的样式信息。</li>
+    </ol>
+    <p>不管 CSS 文件和 JavaScript 文件谁先到达，都要先等到 CSS 文件下载完成并生成 CSSOM，然后再执行 JavaScript 脚本，最后再继续构建 DOM，构建布局树，绘制页面。</p>
+</body>
+
+</html>

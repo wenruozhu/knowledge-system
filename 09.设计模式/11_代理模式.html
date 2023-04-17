@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const baseInfo = ['age', 'career']
+    const privateInfo = ['avatar', 'phone']
+    // 同事A对象实例
+    const user = {
+        isValidated: true,
+        isVip: false
+    }
+    const juejinLovers = new Proxy(girl, {
+        get: function (girl, key) {
+            if (baseInfo.indexOf(key) !== -1 && !user.isValidated) {
+                alert('您还没完成验证')
+                return
+            }
+            if (user.isValidated && privateInfo.indexOf(key) && !user.isVip) {
+                alert('只有VIP才能查看信息')
+            }
+        },
+        set: function (girl, key, val) {
+
+            // 最近一次送来的礼物会尝试赋值给lastPresent字段
+            if (key === 'lastPresent') {
+                if (val.value < girl.bottomValue) {
+                    alert('sorry，您的礼物被拒收了')
+                    return
+                }
+
+                // 如果没有拒收，则赋值成功，同时并入presents数组
+                girl.lastPresent = val
+                girl.presents = [...girl.presents, val]
+            }
+        }
+    })
+</script>
+
+</html>

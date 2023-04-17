@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    /* 
+    当价格类型为“预售价”时，满 100 - 20，不满 100 打 9 折 => pre
+    当价格类型为“大促价”时，满 100 - 30，不满 100 打 8 折 => onSale
+    当价格类型为“返场价”时，满 200 - 50，不叠加 => back
+    当价格类型为“尝鲜价”时，直接打 5 折 => fresh
+    */
+    function prePrice(orignPrice) {
+        if (oringnPrice >= 100) {
+            return orignPrice -= 20
+        }
+        return orignPrice * 0.9
+    }
+
+    function onSalePrice(orignPrice) {
+        if (orignPrice >= 100) {
+            return orignPrice -= 30
+        }
+        return orignPrice * 0.8
+    }
+
+    function backPrice(orignPrice) {
+        if (orignPrice >= 200) {
+            return orignPrice -= 50
+        }
+    }
+
+    function freshPrice(orignPrice) {
+        return orignPrice * 0.5
+    }
+
+    function askPrice(tag, orignPrice) {
+        if (tag === 'pre') {
+            return prePrice(orignPrice)
+        }
+        if (tag === 'onSale') {
+            return onSalePrice(orignPrice)
+        }
+        if (tag === 'back') {
+            return backPrice(orignPrice)
+        }
+        if (tag === 'fresh') {
+            return freshPrice(orignPrice)
+        }
+    }
+    // 重构询价逻辑的分发为对象映射
+    const priceProcessor = {
+        prePrice(orignPrice) {
+            if (oringnPrice >= 100) {
+                return orignPrice -= 20
+            }
+            return orignPrice * 0.9
+        },
+        onSalePrice(orignPrice) {
+            if (orignPrice >= 100) {
+                return orignPrice -= 30
+            }
+            return orignPrice * 0.8
+        },
+        backPrice(orignPrice) {
+            if (orignPrice >= 200) {
+                return orignPrice -= 50
+            }
+        },
+        freshPrice(orignPrice) {
+            return orignPrice * 0.5
+        }
+
+    }
+
+    function askPrice(tag, orignPrice) {
+        return priceProcessor[tag](orignPrice)
+    }
+    // 重构询价逻辑的执行
+</script>
+
+</html>

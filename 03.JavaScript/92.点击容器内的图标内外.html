@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 300px;
+            height: 200px;
+            background-color: orange;
+            border-radius: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="icon"></div>
+</body>
+<script>
+    const box = document.getElementById('box');
+
+    function isIcon(target) {
+        return target.className.includes('icon');
+    }
+
+    box.onclick = function (e) {
+        e.stopPropagation();
+        const target = e.target;
+        console.log(target);
+        if (isIcon(target)) {
+            target.style.border = '10px solid skyblue';
+        }
+    }
+    const doc = document;
+    doc.onclick = function (e) {
+        const children = doc.children;
+        console.log(children);
+        for (let i; i < children.length; i++) {
+            if (isIcon(children[i])) {
+                children[i].style.border = 'none';
+            }
+        }
+    }
+    /* const box = document.getElementById('box');
+    function isCurrent(target) {
+        return target.className.includes('cur');
+    }
+    box.addEventListener('click',function (e) {
+        console.log(e);
+        e.stopPropagation();
+        const target = e.target;
+        if(isCurrent(target)){
+            target.style.border = "10px solid orange";
+        }
+    })
+    const doc = document;
+    doc.addEventListener('click',function (e) {
+        const children = box.children;
+        for (let i = 0,len = children.length; i < len; i++) {
+            if(isCurrent(children[i]));
+            children[i].style.border = 'none';
+        }
+    }) */
+</script>
+
+</html>

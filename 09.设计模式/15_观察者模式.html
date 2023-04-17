@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    class Publisher {
+        constructor() {
+            this.observers = []
+            console.log('Publisher created')
+        }
+        // 增加订阅者
+        add(observer) {
+            console.log('Publisher.add invoked')
+            this.observers.push(observer)
+        }
+        // 移除订阅者
+        remove(observer) {
+            console.log('Publisher.remove invoked')
+            this.observers.forEach((item, i) => {
+                if (item == observer) {
+                    this.observers.splice(i, 1)
+                }
+            })
+        }
+        // 通知所有订阅者
+        notify() {
+            console.log('Publisher.notify invoked')
+            this.observers.forEach((observer) => {
+                observer.update(this)
+            })
+        }
+    }
+    class Observer {
+        constructor() {
+            console.log('Observer created')
+        }
+        update() {
+            console.log('Observer.update invoked')
+
+        }
+    }
+    // 定义一个具体的需求文档（prd）发布类
+    class PrdPublisher extends Publisher {
+        constructor() {
+            super()
+            this.prdState = null
+            this.observers = []
+            console.log('PrdPublisher created')
+        }
+        getState() {
+            console.log('PrdPublisher.getState invoked')
+            return this.prdState
+        }
+        setState(state) {
+            console.log('PrdPublisher.setState invoked')
+            this.prdState = state
+            this.notify()
+        }
+    }
+    class DeveloperObserver extends Observer {
+        constructor() {
+            super()
+            this.prdState = {}
+            console.log('DeveloperObserver created')
+        }
+        update(publisher) {
+            console.log('DeveloperObserver.update invoked')
+            this.prdState = publisher.getState()
+            this.work()
+        }
+        work() {
+            const prd = this.prdState
+            console.log('start work')
+        }
+    }
+    // 创建订阅者
+    const liLei = new DeveloperObserver()
+    const A = new DeveloperObserver()
+    const B = new DeveloperObserver()
+    // 创建发布者
+    const hanMeiMei = new PrdPublisher()
+    const prd = {
+        task: 'work'
+    }
+    hanMeiMei.add(liLei)
+    hanMeiMei.add(A)
+    hanMeiMei.add(B)
+    hanMeiMei.setState(prd)
+</script>
+
+</html>

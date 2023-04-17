@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container {
+            height: 300px;
+            line-height: 300px;
+            text-align: center;
+            margin: 10px 0;
+            background: grey;
+            font-size: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <button id="button">取消节流</button>
+</body>
+<script>
+    /**
+     * @param {*} func 执行函数
+     * @param {number} wait
+     * @param {*}  {
+        leading：false 表示禁用第一次执行
+        trailing: false 表示禁用停止触发的回调
+        leading：false 和 trailing: false 不能同时设置
+    }
+     * @return {function}
+     * 
+     */
+    // 节流： 动作绑定事件，动作发生后一段时间后触发事件，在这段时间内，如果动作又发生，则无视该动作，直到事件执行完后，才能重新触发。
+
+    // 应用场景：滚动事件、实时搜索框
+    var count = 1;
+    var container = document.getElementById('container');
+
+    function getUserAction() {
+        container.innerHTML = count++;
+    };
+
+    var setUseAction = throttle(getUserAction, 3000);
+
+    container.onmousemove = setUseAction
+
+    document.getElementById("button").addEventListener('click', function () {
+        setUseAction.cancel();
+    })
+
+    function throttle(func, wait, options) {
+        var timeout, context, args, result;
+        var previous = 0;
+        if (!options) options = {};
+
+        var later = function () {
+            previous = options.leading === false ? 0 : new Date().getTime();
+            timeout = null;
+            func.apply(context, args);
+            if (!timeout) context = args = null;
+        };
+
+        var throttled = function () {
+            var now = new Date().getTime();
+            if (!previous && options.leading === false) previous = now;
+            var remaining = wait - (now - previous);
+            context = this;
+            args = arguments;
+            if (remaining <= 0 || remaining > wait) {
+                if (timeout) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
+                previous = now;
+                func.apply(context, args);
+                if (!timeout) context = args = null;
+            } else if (!timeout && options.trailing !== false) {
+                timeout = setTimeout(later, remaining);
+            }
+        };
+
+        throttled.cancel = function () {
+            clearTimeout(timeout);
+            previous = 0;
+            timeout = null;
+        };
+
+        return throttled;
+    }
+</script>
+
+</html>

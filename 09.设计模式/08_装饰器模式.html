@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    #modal {
+        height: 200px;
+        width: 200px;
+        line-height: 200px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid black;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <button id='open'>打开弹框</button>
+    <button id='close'>关闭弹框</button>
+</body>
+
+<body>
+
+</body>
+<script>
+    // ES5中的实现
+    let open = document.getElementById("open"),
+        close = document.getElementById("close");
+    const Modal = (function () {
+        let modal = null
+        return function () {
+            if (!modal) {
+                modal = document.createElement('div')
+                modal.innerHTML = '您还未登录哦'
+                modal.id = "modal"
+                modal.style.display = "none"
+                document.body.appendChild(modal)
+            }
+            return modal
+        }
+    })()
+    /* function openModal() {
+            const modal = new Modal()
+            modal.style.display = 'block'
+        }
+
+        function changeButtonText() {
+            open.innerText = '快去登录'
+        }
+
+        function disableButton() {
+            open.setAttribute("disabled", true)
+        }
+
+        function changeButtonStatus() {
+            changeButtonText()
+            disableButton()
+        } */
+    /* open.addEventListener('click', function () {
+        openModal()
+        changeButtonStatus()
+    })
+    close.addEventListener('click', function () {
+        const modal = new Modal()
+        if (modal) {
+            modal.style.display = 'none'
+        }
+    }) */
+    // 定义打开按钮
+
+    class OpenButton {
+        onClick() {
+            const modal = new Modal()
+            modal.style.display = 'block'
+        }
+    }
+    // 定义按钮对应的装饰器
+    class Decorator {
+        constructor(open_button) {
+            this.open_button = open_button
+        }
+        onClick() {
+            this.open_button.onClick()
+            this.changeButtonStatus()
+        }
+        changeButtonStatus() {
+            this.changeButtonText()
+            this.disableButton()
+        }
+        changeButtonText() {
+            open.indexText = '快去登录'
+        }
+        disableButton() {
+            open.setAttribute('disabled', true)
+        }
+    }
+    // 定义打开按钮
+    
+    const openButton = new OpenButton()
+    const decorator = new Decorator(openButton)
+    open.addEventListener('click', function () {
+        decorator.onClick()
+    })
+    // 
+</script>
+
+</html>

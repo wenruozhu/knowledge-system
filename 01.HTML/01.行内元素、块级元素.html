@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <ul>
+        <li>
+            块级元素会独占一行，其宽度自动填满其父元素宽度
+            行内元素不会独占一行，相邻的行内元素会排列在同一行里，知道一行排不下，才会换行，其宽度随元素的内容而变化
+        </li>
+        <li>
+            块级元素可以设置 width, height属性，【注意：块级元素即使设置了宽度，仍然是独占一行的】
+            行内元素设置width, height无效;
+        </li>
+        <li>
+            块级元素可以设置margin 和 padding.
+            行内元素的水平方向的padding-left,padding-right,margin-left,margin-right
+            都产生边距效果，但是竖直方向的padding-top,padding-bottom,margin-top,margin-bottom都不会产生边距效果。（水平方向有效，竖直方向无效）
+        </li>
+
+
+    </ul>
+    <span>
+        <div>123</div>
+    </span>
+</body>
+
+</html>

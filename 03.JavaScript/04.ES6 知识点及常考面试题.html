@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //一、 var,let,const区别
+    /* var a = 1
+    let b = 2
+    const c = 3
+    // c= 4
+    console.log(window.b)
+    console.log(window.c)
+
+    function test() {
+        console.log(this)
+        console.log(a)
+        let a
+    }
+    test()
+    console.log(window) */
+    // 1.var声明的变量会挂载到全局window对象上，其它两者不会。
+    // 2.let和const作用基本一致，const声明的变量不能修改。
+    // 3.var存在提升，可以在声明前使用，let和const因为暂时性死区，不能在声明前使用。
+    // 4.函数提升优先于变量提升，函数提升会把整个函数挪到作用域顶部，变量提升只会把声明挪到作用域顶部。
+    // 二、原型继承和 class 继承
+    // 1.组合继承
+    function Parent(value) {
+        this.val = value
+    }
+    Parent.prototype.getValue = function () {
+        console.log(this.val)
+    }
+    function Child(value) {
+        Parent.call(this,value)
+    }
+    Child.prototype = new Parent()
+    const child = new Child(1)
+    child.getValue()
+    // Child instanceof Parent
+</script>
+
+</html>

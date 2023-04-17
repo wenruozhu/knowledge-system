@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // call、apply、bind相同点：都是改变this的指向，传入的第一个参数都是绑定this的指向，在非严格模式中，如果第一个参数是nul或者undefined，会把全局对象（浏览器是window）作为this的值，要注意的是，在严格模式中，null 就是 null，undefined 就是 undefined
+
+    // call和apply唯一的区别是：call传入的是参数列表，apply传入的是数组，也可以是类数组
+    
+    // bind和call、apply的区别： bind返回的是一个改变了this指向的函数，便于稍后调用，不像call和apply会立即调用；bind和call很像，传入的也是参数列表，但是可以多次传入，不需要像call，一次传入
+    // 值得注意：当 bind 返回的函数 使用new作为构造函数时，绑定的 this 值会失效，this指向实例对象，但传入的参数依然生效 （new调用的优先级 > bind调用）
+    // bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。
+    Function.prototype.bind2 = function (context) {
+        const self = this
+        const args = Array.prototype.slice.call(arguments, 1)
+
+        var fBound = function () {
+            var bindArgs = Array.prototype.slice.call(arguments);
+            // 当作为构造函数时，this 指向实例，此时结果为 true，将绑定函数的 this 指向该实例，可以让实例获得来自绑定函数的值
+            // 以上面的是 demo 为例，如果改成 `this instanceof fBound ? null : context`，实例只是一个空对象，将 null 改成 this ，实例会具有 habit 属性
+            // 当作为普通函数时，this 指向 window，此时结果为 false，将绑定函数的 this 指向 context
+            return self.apply(this instanceof fBound ? this : context, args.concat(bindArgs));
+        }
+        // 修改返回函数的 prototype 为绑定函数的 prototype，实例就可以继承绑定函数的原型中的值
+        fBound.prototype = this.prototype;
+        return fBound;
+    }
+
+    // call和apply 都是为了解决改变 this 的指向。
+
+    // call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。
+    Function.prototype.call2 = function (context) {
+        // console.log(context, this)
+        context = context || window
+        // 将函数设为对象的属性
+        context.fn = this
+        const args = [] //['arguments[0]', 'arguments[1]', 'arguments[2]']
+        for (let i = 1, len = arguments.length; i < len; i++) {
+            args.push('arguments[' + i + ']')
+        }
+        console.log('args', eval('context.fn(' + args + ')'))
+        // 执行该函数
+        // 在eval中，args 自动调用 args.toString()方法
+        //  result = context.fn(arguments[1], arguments[2], ...);
+        const result = eval('context.fn(' + args + ')')
+        // console.log('args', eval('context.fn(' + args + ')'))
+        // 删除函数
+        delete context.fn()
+        return result
+    }
+    // 
+    Function.prototype.apply2 = function (context, arr) {
+        console.log('context', Object(context))
+        context = Object(context) || window;
+        context.fn = this;
+
+        var result;
+        if (!arr) {
+            result = context.fn();
+        }
+        else {
+            var args = [];
+            for (var i = 0, len = arr.length; i < len; i++) {
+                args.push('arr[' + i + ']');
+            }
+            result = eval('context.fn(' + args + ')')
+        }
+
+        delete context.fn
+        return result;
+    }
+
+    let value = 2
+
+    let foo = {
+        value: 1
+    }
+
+    function bar(name, age) {
+        console.log(this.value);
+        return {
+            value: this.value,
+            name: name,
+            age: age
+        }
+    }
+
+    // call 可以接收一个参数列表
+    // bar.call2(foo, 'joey', 22);
+    // apply 只接受一个参数数组
+    console.log(bar.apply2(null))
+    // console.log(bar.apply2(foo, ['ross', 28]));
+</script>
+
+</html>

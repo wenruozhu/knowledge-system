@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //测试性能
+    let arr = new Array(10000).fill(null);
+
+    console.time('FOR');
+    for (let i = 0, len = arr.length; i < len; i++) { }
+    console.timeEnd('FOR');
+
+    console.time('WHILE');
+    let k = 0;
+    while (k < arr.length) { k++; }
+    console.timeEnd('WHILE');
+
+    console.time('FOREACH');
+    arr.forEach(() => { });
+    console.timeEnd('FOREACH');
+
+    console.time('FOROF');
+    for (let value of arr) { }
+    console.timeEnd('FOROF');
+
+    console.time('FORIN');
+    for (let key in arr) { }
+    console.timeEnd('FORIN');
+</script>
+
+</html>

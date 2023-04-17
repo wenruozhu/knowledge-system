@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    class SingleInstance {
+        show() {
+            console.log("我是一个单例对象")
+        }
+        static getInstance() {
+            if (!SingleInstance.instance) {
+                SingleInstance.instance = new SingleInstance()
+            }
+            return SingleInstance.instance
+        }
+    }
+    const s1 = SingleInstance.getInstance()
+    const s2 = SingleInstance.getInstance()
+</script>
+
+</html>

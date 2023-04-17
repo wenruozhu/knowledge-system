@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script src="https://unpkg.com/vue@2.7.14/dist/vue.js"></script> -->
+</head>
+
+<body>
+    <input type="text">
+</body>
+
+<script>
+    var isInputZh = false;
+    var search = document.querySelector('input');
+
+    search.addEventListener('compositionstart', function (e) {
+        console.log('compositionstart')
+        isInputZh = true;
+    }, false);
+    search.addEventListener('compositionend', function (e) {
+        console.log('compositionend')
+
+        isInputZh = false;
+
+        doSomething(search.value);
+    }, false);
+    search.addEventListener('input', function (e) {
+        console.log(e)
+        if (isInputZh) return;
+        var value = this.value;
+
+        doSomething(value);
+    }, false);
+
+    function doSomething(value) {
+        console.log(value)
+    }
+</script>
+
+</html>

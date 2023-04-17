@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .parent {
+            width: 200px;
+            height: 100px;
+            background: red;
+            margin: 10px auto;
+        }
+
+        .child {
+            width: 100px;
+            height: 50px;
+            background: blue;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .parent-flex {
+            display: flex;
+        }
+
+        .child-auto {
+            margin: auto;
+        }
+
+        .table {
+            display: table;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent flex">
+        <div class="child"></div>
+    </div>
+    <div class="parent grid">
+        <div class="child"></div>
+    </div>
+    <!-- 这个不懂为什么 -->
+    <div class="parent parent-flex">
+        <div class="child child-auto"></div>
+    </div>
+    <ol>
+        <li>1.定宽高 使用定位+margin/transfrom</li>
+        <li>2.display: flex;justify-content: center;align-items: center;</li>
+        <li>3.display: grid;justify-content: center;align-items: center;</li>
+        <li>4.parent -> display:flex/grid; child -> margin:auto;</li>
+    </ol>
+</body>
+
+</html>

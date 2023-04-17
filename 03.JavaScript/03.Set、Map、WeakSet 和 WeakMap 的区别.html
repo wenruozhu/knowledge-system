@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Set 和 Map 主要的应用场景在于 数据重组 和 数据储存</p>
+
+    <p>Set 是一种叫做集合的数据结构，Map 是一种叫做字典的数据结构</p>
+
+    <p>Set 对象允许你储存任何类型的唯一值，无论是原始值或者是对象引用。</p>
+
+    <p>向 Set 加入值的时候，不会发生类型转换，所以5和"5"是两个不同的值。Set 内部判断两个值是否不同，使用的算法叫做“Same-value-zero equality”，它类似于精确相等运算符（===），主要的区别是**NaN等于自身，而精确相等运算符认为NaN不等于自身。</p>
+
+    Set
+    <ol>
+        <li>1.成员不能重复</li>
+        <li>2.只有键值，没有键名，有点类似数组。</li>
+        <li>3.可以遍历，方法有add, delete,has</li>
+    </ol>
+
+    weakSet
+    <ol>
+        <li>成员都是对象</li>
+        <li>成员都是弱引用，随时可以消失。 可以用来保存DOM节点，不容易造成内存泄漏，不能遍历，方法有add, delete,has</li>
+    </ol>
+
+    Map
+    <ol>
+        <li>本质上是键值对的集合，类似集合</li>
+        <li>可以遍历，方法很多，可以跟各种数据格式转换</li>
+    </ol>
+
+
+    weakMap
+    <ol>
+        <li>直接受对象作为键名（null除外），不接受其他类型的值作为键名</li>
+        <li>键名所指向的对象，不计入垃圾回收机制</li>
+        <li>不能遍历，方法同get,set,has,delete</li>
+    </ol>
+
+</body>
+
+</html>

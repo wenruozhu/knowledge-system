@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .test1 {
+        width: auto;
+        height: 100px;
+        padding: 10px;
+        margin: 10px;
+        background: red;
+    }
+
+    .test2 {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        margin: 10px;
+        background: blue;
+        box-sizing: content-box;
+    }
+</style>
+
+<body>
+    <p>width:auto;会包含padding,border,margin的宽度，width:100%;在content-box下是不会包含这三个的宽度的；但height的就不一样了，height:auto;是根据其内容决定
+    </p>
+    <div class="test1"></div>
+    <div class="test2"></div>
+</body>
+
+</html>
