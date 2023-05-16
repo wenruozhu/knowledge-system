@@ -81,12 +81,9 @@
         <li>而且，如果同时操作 DOM ，在多线程不加锁的情况下，最终会导致 DOM 渲染的结果不可预期。</li>
     </ol>
     <p>（1）js是单线程的，但是分同步异步</p>
-    <p>（2）微任务和宏任务皆为异步任务，它们都属于一个队列
-    </p>
-    <p>（3）宏任务一般是：script、setTimeout、setInterval、postMessage、MessageChannel、setImmediate(Node.js 环境)
-    </p>
-    <p>（4）微任务：Promise.then、MutationObserver（浏览器）、process.nextTick(Node.js 环境)
-    </p>
+    <p>（2）微任务和宏任务皆为异步任务，它们都属于一个队列</p>
+    <p>（3）宏任务一般是：script、setTimeout、setInterval、postMessage、MessageChannel、setImmediate(Node.js 环境)</p>
+    <p>（4）微任务：Promise.then、MutationObserver（浏览器）、process.nextTick(Node.js 环境)</p>
 
     <h2>调用栈 Call Stack </h2>
 
