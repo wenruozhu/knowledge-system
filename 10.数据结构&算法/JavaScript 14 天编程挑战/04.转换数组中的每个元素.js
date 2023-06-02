@@ -3,7 +3,6 @@
  * @param {Function} fn
  * @return {number[]}
  */
-// 未做出
 var map = function(arr, fn) {
   return Array.from(arr, fn);
 };
