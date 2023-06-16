@@ -3,7 +3,7 @@
  * @param {number} size
  * @return {Array[]}
  */
-var chunk = function(arr, size) {
+var chunk = function (arr, size) {
   if (arr.length === 0) return [];
   let array = [],
     index = 1;
@@ -13,7 +13,7 @@ var chunk = function(arr, size) {
     if (array.length + size > arr.length) {
       array.push(arr.slice(index * size));
     }
-    
+
     index++;
   }
   return array;
