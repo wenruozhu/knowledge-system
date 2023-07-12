@@ -23,7 +23,24 @@
     <button id="button">点击取消debounce</button>
 </body>
 <script>
+    // 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
     // 防抖：动作绑定事件，动作发生后一定时间后触发事件，在这段时间内，如果该动作又发生，则重新等待一定时间再触发事件。
+    // 简单版
+    function debounce(fn) {
+        // 创建一个标记用来存放定时器的返回值
+        let timeout = null;
+        return function () {
+            // 每次当用户点击/输入的时候，把前一个定时器清除
+            clearTimeout(timeout);
+            // 然后创建一个新的 setTimeout，
+            // 这样就能保证点击按钮后的 interval 间隔内
+            // 如果用户还点击了的话，就不会执行 fn 函数
+            timeout = setTimeout(() => {
+                fn.call(this, arguments);
+            }, 1000);
+        };
+    }
+
 
     // 应用场景：表单校验
     let count = 1

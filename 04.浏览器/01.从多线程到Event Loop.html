@@ -113,7 +113,7 @@
     <h3>await</h3>
 
     <p>async关键字是将一个同步函数变成一个异步函数，并将返回值变为promise。</p>
-    
+
     <p>而await可以放在任何异步的、基于promise的函数之前。在执行过程中，它会暂停代码在该行上，直到promise完成，然后返回结果值。而在暂停的同时，其他正在等待执行的代码就有机会执行了。</p>
 </body>
 <script>
@@ -142,35 +142,35 @@
 
     // 1=>2=>3=>before timeout=>also before timeout=>4=>test
 
-    async function async1() {
-        console.log("a");
-        const res = await async2();
-        console.log("b");
-    }
+    // async function async1() {
+    //     console.log("a");
+    //     const res = await async2();
+    //     console.log("b");
+    // }
 
-    async function async2() {
-        console.log("c");
-        return 2;
-    }
+    // async function async2() {
+    //     console.log("c");
+    //     return 2;
+    // }
 
-    console.log("d");
+    // console.log("d");
 
-    setTimeout(() => {
-        console.log("e");
-    }, 0);
+    // setTimeout(() => {
+    //     console.log("e");
+    // }, 0);
 
-    async1().then(res => {
-        console.log("f")
-    })
+    // async1().then(res => {
+    //     console.log("f")
+    // })
 
-    new Promise((resolve) => {
-        console.log("g");
-        resolve();
-    }).then(() => {
-        console.log("h");
-    });
+    // new Promise((resolve) => {
+    //     console.log("g");
+    //     resolve();
+    // }).then(() => {
+    //     console.log("h");
+    // });
 
-    console.log("i");
+    // console.log("i");
     // d
     // a
     // c
@@ -180,6 +180,24 @@
     // h
     // f
     // e
+    setTimeout(function () {
+        console.log(1)
+    }, 0);
+    new Promise(function executor(resolve) {
+        console.log(2)
+        for (let i = 0; i < 10000; i++) {
+            i == 9999 && resolve()
+        }
+        console.log(3)
+    }).then(function () {
+        console.log(4)
+    })
+    console.log(5)
+    // 2
+    // 5
+    // 3
+    // 4
+    // 1
 </script>
 
 </html>

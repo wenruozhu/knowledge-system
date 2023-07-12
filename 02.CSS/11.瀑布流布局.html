@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .masonry {
+            column-count: 3;
+            column-gap: 10px;
+        }
+        /* .masonry {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: 10px;
+        } */
+
+        .masonry .item {
+            margin-bottom: 10px;
+            border-radius: 8px;
+            position: relative;
+            font-size: 0;
+            overflow: hidden;
+        }
+
+        .masonry .item img {
+            width: 100%;
+        }
+
+        .masonry .item span {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="https://juejin.cn/post/6844904004720263176#heading-0">瀑布流布局</a>
+    <div id="app" class="masonry">
+        <div class="item" v-for="(item,index) in imageList">
+            <img :src="url+item" alt="">
+            <span>{{index}}</span>
+        </div>
+    </div>
+</body>
+
+<script src="../assets/js/axios.js"></script>
+<script src="../assets/js/vue.global.js"></script>
+<script>
+    console.log('axios', axios)
+    const { createApp, ref } = Vue
+    const vue3Composition = {
+        setup() {
+            const url = 'http://127.0.0.1:5500/assets/img/'
+            const imageList = ref([])
+            axios.get('../assets/img/').then((res) => {
+                imageList.value = res.data
+                // console.log(imageList.value)
+            }).catch((err) => {
+
+            });
+            return { url, imageList }
+        }
+    }
+
+    const app = createApp(vue3Composition).mount('#app')
+
+    // console.log('vue', Vue)
+    // console.log('axios', axios.get)
+</script>
+
+</html>

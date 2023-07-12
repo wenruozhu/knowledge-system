@@ -6,9 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+        }
+
+        .padding {
+            padding: 20px;
+            background-color: red;
+        }
+        .margin {
+            margin: 20px;
+            background-color: blue;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="padding"></div>
+    <div class="margin"></div>
+    <p>padding 和 margin 最大区别在于作用对象不同，padding 作用于自身，margin 作用于外部</p>
     <p>何时使用margin：</p>
     <ol>
         <li>需要在border外侧添加空白</li>

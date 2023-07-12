@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent {
+            width: 50%;
+        }
+
+        .parent>div {
+            height: 50px;
+        }
+
+        .p1 {
+            width: 50%;
+            background-color: red;
+        }
+
+        .p2 {
+            width: 50vw;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <!-- % 有继承关系 -->
+        <div class="p1"></div>
+        <!-- vw 只和设备宽度相关 -->
+        <div class="p2"></div>
+    </div>
+</body>
+
+</html>

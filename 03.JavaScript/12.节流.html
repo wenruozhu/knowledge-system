@@ -34,6 +34,20 @@
      * @return {function}
      * 
      */
+    // 规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。
+    function throttle(func, delay) {
+        var prev = Date.now();
+        return function () {
+            var context = this;
+            var args = arguments;
+            var now = Date.now();
+            if (now - prev >= delay) {
+                func.apply(context, args);
+                prev = Date.now();
+            }
+        }
+    }
+
     // 节流： 动作绑定事件，动作发生后一段时间后触发事件，在这段时间内，如果动作又发生，则无视该动作，直到事件执行完后，才能重新触发。
 
     // 应用场景：滚动事件、实时搜索框

@@ -18,18 +18,31 @@
 
 </body>
 <script>
-    const a = {
-        b: 2,
-        foo: function () { console.log(this.b) }
+    // 'use strict';
+    // const a = {
+    //     b: 2,
+    //     foo: function () { console.log(this.b) }
+    // }
+
+    // function b(foo) {
+    //     // 输出什么？
+    //     foo() //undefined
+    // }
+
+    // b(a.foo)
+    var name = "Jay"
+    var person = {
+        name: 'Wang',
+        pro: {
+            name: 'Michael',
+            getName: function () {
+                return this.name
+            }
+        }
     }
-
-    function b(foo) {
-        // 输出什么？
-        foo() //undefined
-    }
-
-    b(a.foo)
-
+    console.log(person.pro.getName())
+    var people = person.pro.getName
+    console.log(people())
 </script>
 
 </html>
