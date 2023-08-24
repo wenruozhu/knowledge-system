@@ -17,5 +17,10 @@
     <p>如果第一个参数string的第一个值符合条件，其他值不符合条件，那么不符合条件的值到最后会被忽略，然后进行计算</p>
     parseInt('4215213', 5) // 4*Math.pow(5, 2) + 2*Math.pow(5, 1) + 1*Math.pow(5, 0)
 </body>
+<script>
+    ['1', '2', '3'].map((item, index) => {
+        return parseInt(item, index)
+    })
+</script>
 
 </html>

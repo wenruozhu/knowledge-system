@@ -8,10 +8,16 @@
     <style>
         .parent {
             width: 50%;
+            padding: 32px 0;
+            background-color: green;
+            text-indent: 20px;
+
         }
 
         .parent>div {
             height: 50px;
+            line-height: 50px;
+            text-indent: 20px;
         }
 
         .p1 {
@@ -28,10 +34,11 @@
 
 <body>
     <div class="parent">
+        parent { width: 50%; }
         <!-- % 有继承关系 -->
-        <div class="p1"></div>
+        <div class="p1">width: 50%</div>
         <!-- vw 只和设备宽度相关 -->
-        <div class="p2"></div>
+        <div class="p2">width: 50vw</div>
     </div>
 </body>
 

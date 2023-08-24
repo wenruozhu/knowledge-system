@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="150" height="150"></canvas>
+    <script>
+const canvas = document.getElementById("canvas"); // 得到DOM对象
+if (canvas.getContext) {
+    var ctx = canvas.getContext("2d"); // 得到渲染上下文
+    ctx.fillStyle = "rgb(200,0,0)";
+    ctx.fillRect(10, 10, 100, 100);
+}
+    </script>
+</body>
+</html>

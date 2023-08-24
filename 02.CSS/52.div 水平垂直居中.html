@@ -10,13 +10,20 @@
         .parent {
             width: 200px;
             height: 100px;
+            position: relative;
             background: red;
             margin: 10px auto;
         }
 
+        .absolute {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+        }
+
         .child {
             width: 100px;
-            height: 50px;
             background: blue;
         }
 
@@ -47,21 +54,24 @@
 </head>
 
 <body>
+    <div class="parent">
+        <div class="child absolute">123</div>
+    </div>
     <div class="parent flex">
-        <div class="child"></div>
+        <div class="child">123</div>
     </div>
     <div class="parent grid">
-        <div class="child"></div>
+        <div class="child">123</div>
     </div>
     <!-- 这个不懂为什么 -->
     <div class="parent parent-flex">
-        <div class="child child-auto"></div>
+        <div class="child child-auto">123</div>
     </div>
     <ol>
-        <li>1.定宽高 使用定位+margin/transfrom</li>
-        <li>2.display: flex;justify-content: center;align-items: center;</li>
-        <li>3.display: grid;justify-content: center;align-items: center;</li>
-        <li>4.parent -> display:flex/grid; child -> margin:auto;</li>
+1. `position: absolute + transfrom；`
+2. `display: flex;justify-content: center;align-items: center;`
+3. `display: grid;justify-content: center;align-items: center;`
+4. `parent -> display:flex/grid; child -> margin:auto;`
     </ol>
 </body>
 
